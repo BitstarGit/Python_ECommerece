@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load bootstrap_form from bootstrap4 %}
+{% load i18n %}
+
+{% block title %}{% trans "Become new Partner" context "newPartner page title" %} — {{ block.super }}{% endblock %}
+
+{% block breadcrumb %}
+  <ul class="breadcrumbs list-unstyled">
+    <li>
+      <a href="{% url 'home' %}">
+        {% trans "Home" context "Main navigation item" %}
+      </a>
+    </li>
+    <li>{% trans "Your account" context "Main navigation item" %} (<b>{{ user }}</b>)</li>
+  </ul>
+{% endblock breadcrumb %}
+
+
+{% block content %}
+  <div class="account__nav container">
+    <h2>PARTNER ONBOARDING MY ACCOUNT</h2>
+    <ul class="nav nav-tabs col-lg-11 m-auto" role="tablist">
+      <li class="nav-item">
+          <h3>STEP 1</h3>
+      </li>
+      <li class="nav-item">
+          <h3>STEP 2</h3>
+      </li>
+      <li class="nav-item">
+          <h3><b>STEP 3</b></h3>
+      </li>
+    </ul>
+  </div>
+  <div class="col-lg-10 col-sm-12 m-auto">
+    <form class="" action="{% url 'account:newPartner' %}" method="post">
+      {% csrf_token %}
+      <label for="sms_code">SMS code: </label>
+      <input id="sms_code" type="number" name="sms_code" required>
+      <input type="submit" value="Submit">
+    </form>
+    <form class="" action="{% url 'account:newPartner' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="resend_sms" required>
+      <input type="submit" value="Resend">
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "dashb_partner/base_modal.html" %}
+
+{% load i18n %}
+{% load materializecss %}
+
+{% block action_url %}
+  {% url 'partner:customer-add-note' customer_pk=customer.pk %}
+{% endblock %}
+
+{% block title %}
+  {% trans "Add note" context "Modal add note title" %}
+{% endblock %}
+
+{% block content %}
+  {{ form|materializecss }}
+{% endblock %}
+
+{% block primary_action %}
+  {% trans "Save note" context "Modal add note primary action" %}
+{% endblock %}

@@ -1,0 +1,198 @@
+{% load mathfilters %}
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <title>Demystifying Email Design</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<body style="margin: 0; padding: 0;">
+
+    <table cellpadding="0" cellspacing="0" width="100%">
+
+        <tr>
+
+            <td style="padding: 50px 0 30px 0;">
+
+                <table align="center" cellpadding="0" cellspacing="0" width="600">
+
+                    <tr>
+
+                        <td align="center" bgcolor="#ffffff"
+                            style="padding: 20px 0 10px 0; color: #153643; font-size: 28px; font-weight: bold; font-family: Arial, sans-serif;border-bottom: 2px solid #9600b3;">
+
+                            <img src="http://{{ domain }}/static/img/logo.png" alt="axcZdr" width="300"
+                                style="display: block; max-height: 35px;" />
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td bgcolor="#ffffff" style="padding: 40px 30px 40px 30px;">
+
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+                                <tr>
+
+                                    <td style="color: #153643; font-family: Arial, sans-serif; font-size: 24px;">
+
+                                        <b>Here is your order summary!</b>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td
+                                        style="padding: 20px 0 30px 0; color: #000000; font-family: Arial, sans-serif; font-size: 13px; width: 100%;">
+
+
+                                        Hi, <br><br>
+
+                                        Thank you for your order. Below is the list of fulfilled products.You can track
+                                        your shipmend with track code. <br>
+                                    </td>
+                                </tr>
+                                {% for fulfillment in order_fulfillments %}
+                                <tr>
+                                    <td>
+                                        {{ fulfillment }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td
+                                        style="padding: 20px 0 30px 0; color: #000000; font-family: Arial, sans-serif; font-size: 13px;">
+                                        <table style="width: 100%; text-align: center;border: 1px solid;">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        Item
+                                                    </th>
+
+                                                    <th>
+                                                        Unit Price
+                                                    </th>
+                                                    <th>
+                                                        Amount
+                                                    </th>
+                                                    <th>
+                                                        Quantity
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for line in fulfillment %}
+                                                <tr>
+                                                    <td>{{ line.order_line }}</td>
+                                                    <td>
+                                                        {% for partner_line in line.partner_lines.all %}
+                                                        {{partner_line.unit_price}}
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td>
+                                                        {% for partner_line in line.partner_lines.all %}
+                                                        {{partner_line.unit_price|mul:line.quantity}}
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td>{{ line.quantity }}</td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+                                <tr>
+
+                                    <td
+                                        style="padding: 20px 0 30px 0; color: #000000; font-family: Arial, sans-serif; font-size: 13px; width: 100%;">
+
+                                        <b>
+                                            This is an automatically generated e-mail, please do not reply
+                                        </b>
+
+                                    </td>
+
+                                    <td>
+
+                                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+                                            <tr>
+
+                                                <td width="260" valign="top">
+
+                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+                                                        <tr>
+
+                                                            <td style="text-align: center;">
+
+
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                    </table>
+
+                                                </td>
+
+                                            </tr>
+
+                                        </table>
+
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td style="background-color:#ffffff;">
+
+                            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+
+                                <tr>
+
+                                    <td
+                                        style="text-align:center; color: #ffffff; font-family: Arial, sans-serif; font-size: 14px; background: gainsboro;">
+
+                                        <p style="color: #000000; height: 30px; margin-top: 20px">Sincerely, axcZdr</p>
+                                    </td>
+
+                                </tr>
+
+                            </table>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </td>
+
+        </tr>
+
+    </table>
+
+</body>
+
+</html>

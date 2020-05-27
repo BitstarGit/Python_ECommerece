@@ -1,0 +1,103 @@
+{% extends "dashb_partner/base_modal.html" %}
+
+{% load i18n %}
+{% load materializecss %}
+
+{% block action_url %}
+{% url 'partner:fulfillment-change-date' order_pk=order.pk fulfillment_pk=fulfillment.pk %}
+{% endblock %}
+
+{% block title %}
+{% if fulfillment.tracking_number %}
+  {% trans "Update Date" context "Modal change fulfillment tracking title" %}
+{% else %}
+  {% trans "Update Date" context "Modal change fulfillment tracking title" %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+  
+<div style="padding: 20px;">
+  Estimated Date :
+  <input type="date" id="est_shipping_date_update" name="est_shipping_date_update" min="2005-01-01" max="2030-01-01">
+</div>
+{% for status in fulfillment.partnerfulfillments.all %}
+  <input type="hidden" id="hidden_date" value="{{status.est_shipping_date}}">
+{% endfor %}
+<script>
+
+  var str_est=$('#hidden_date').val();
+  var token_str = str_est.split(',');
+  var token_str1 = token_str[0].split(' ');
+  var mm,dd,yy;
+  switch(token_str1[0]){
+    case "Jan":
+    case "Jan.":
+      mm = "01";
+      break;
+    case "Feb":
+    case "Feb.":
+      mm = "02";
+      break;
+    case "March":
+    case "March.":
+      mm = "03";
+      break;
+    case "April":
+    case "April.":
+      mm = "04";
+      break;
+    case "May":
+    case "May.":
+      mm = "05";
+      break;
+    case "June":
+    case "June.":
+      mm = "06";
+      break;
+    case "July":
+    case "July.":
+      mm = "07";
+      break;
+    case "Aug":
+    case "Aug.":
+      mm = "08";
+      break;
+    case "Sept":
+    case "Sept.":
+      mm = "09";
+      break;
+    case "Oct":
+    case "Oct.":
+      mm = "10";
+      break;
+    case "Nov":
+    case "Nov.":
+      mm = "11";
+      break;
+    case "Dec":
+    case "Dec.":
+      mm = "12";
+      break;
+  }
+  if(token_str1[1].length == 1){
+    dd = "0"+token_str1[1];
+  }else{
+    dd = token_str1[1];
+  }
+  var date1 = token_str[1].substring(1,5) +"-"+mm+"-"+dd;
+  console.log(str_est);
+  $('#est_shipping_date_update').val(date1);
+</script>
+  {% if form.send_mail %}
+    {{ form.send_mail|materializecss }}
+  {% endif %}
+{% endblock %}
+
+{% block primary_action %}
+{% if fulfillment.tracking_number %}
+  {% trans "Update" context "Modal change fulfillment tracking primary action" %}
+{% else %}
+  {% trans "Update" context "Modal change fulfillment tracking primary action" %}
+{% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Become new Partner" context "newPartner page title" %} — {{ block.super }}{% endblock %}
+
+{% block breadcrumb %}
+  <ul class="breadcrumbs list-unstyled">
+    <li>
+      <a href="{% url 'home' %}">
+        {% trans "Home" context "Main navigation item" %}
+      </a>
+    </li>
+    <li>{% trans "Your account" context "Main navigation item" %} (<b>{{ user }}</b>)</li>
+  </ul>
+{% endblock breadcrumb %}
+
+
+{% block content %}
+  <div class="account__nav container">
+    <h2>PARTNER ONBOARDING MY ACCOUNT</h2>
+    <ul class="nav nav-tabs col-lg-11 m-auto" role="tablist">
+      <li class="nav-item">
+          <h3>STEP 1</h3>
+      </li>
+      <li class="nav-item">
+          <h3>STEP 2</h3>
+      </li>
+      <li class="nav-item">
+          <h3>STEP 3</h3>
+      </li>
+    </ul>
+  </div>
+  <div class="col-lg-10 col-sm-12 m-auto">
+    {% if not error %}
+    <h1>Congratulations, you are a Partner</h1>
+    {% else %}
+    <h1>Something went wrong, please try again</h1>
+    {% endif%}
+  </div>
+{% endblock %}

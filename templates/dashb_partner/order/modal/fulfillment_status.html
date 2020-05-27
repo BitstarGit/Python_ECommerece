@@ -1,0 +1,51 @@
+{% extends "dashb_partner/base_modal.html" %}
+
+{% load i18n %}
+{% load materializecss %}
+
+{% block action_url %}
+{% url 'partner:fulfillment-change-status' order_pk=order.pk fulfillment_pk=fulfillment.pk %}
+{% endblock %}
+
+{% block title %}
+{% if fulfillment.tracking_number %}
+  {% trans "Update Status" context "Modal change fulfillment tracking title" %}
+{% else %}
+  {% trans "Update Status" context "Modal change fulfillment tracking title" %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="page"  style="padding: 20px;">
+    Select Type :
+    {% for status in fulfillment.partnerfulfillments.all %}
+    <input type="hidden" id="hidden_status" value="{{status.partner_status}}">
+    {% endfor %}
+    <div class="select-dropdown">
+      <select id="modal_status" name="select_type_update" value="{{fulfillment.partner_status}}">
+        <option value="1">SENT_OFFER</option>
+        <option value="2">APPROVED_OFFER</option>
+        <option value="3">REJECTED</option>
+        <option value="4">OFFER</option>
+        <option value="5">PACKED</option>
+        <option value="6">SHIPPED</option>
+        <option value="7">COLLECTED</option>
+        <option value="8">CLOSED</option>
+      </select>
+    </div>
+  </div>
+  <script>
+    $('#modal_status').val($('#hidden_status').val());
+  </script>
+  {% if form.send_mail %}
+    {{ form.send_mail|materializecss }}
+  {% endif %}
+{% endblock %}
+
+{% block primary_action %}
+{% if fulfillment.tracking_number %}
+  {% trans "Update" context "Modal change fulfillment tracking primary action" %}
+{% else %}
+  {% trans "Update" context "Modal change fulfillment tracking primary action" %}
+{% endif %}
+{% endblock %}

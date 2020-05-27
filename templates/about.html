@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load axc_tags %}
+
+
+{% block breadcrumb %}
+  <ul class="breadcrumbs list-unstyled">
+    <li>
+      <a href="{% url 'home' %}">
+        {% trans "Home" context "Main navigation item" %}
+      </a>
+    </li>
+
+    <li>
+      <a href="">O nas</a>
+        <p>{% get_setting "INSTANCE_NAME" %}</p>
+    </li>
+  </ul>
+{% endblock breadcrumb %}
+
+
+{% block content %}
+    <h2>O nas / About us</h2>
+{% endblock %}
